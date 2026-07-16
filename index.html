@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Keysha Radhitya — Portfolio</title>
+<meta name="description" content="Portfolio of Your Name — student, scholar, and developer.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Work+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --ink: #1c1a17;
+    --ink-soft: #4a453d;
+    --parchment: #ede3c8;
+    --parchment-light: #f6f0de;
+    --brass: #9c7a3c;
+    --brass-bright: #c79a4b;
+    --teal: #2f6b64;
+    --rule: #c9bb98;
+    --rule-faint: rgba(156, 122, 60, 0.18);
+
+    --font-display: 'Amiri', serif;
+    --font-body: 'Work Sans', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+
+    --margin-w: 84px;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  body {
+    margin: 0;
+    background-color: var(--parchment);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-weight: 400;
+    line-height: 1.65;
+    background-image:
+      repeating-linear-gradient(
+        to bottom,
+        transparent,
+        transparent 47px,
+        var(--rule-faint) 47px,
+        var(--rule-faint) 48px
+      );
+  }
+
+  a { color: var(--teal); }
+  a:focus-visible,
+  button:focus-visible,
+  .nav-link:focus-visible {
+    outline: 2px solid var(--teal);
+    outline-offset: 3px;
+  }
+
+  ::selection { background: var(--brass); color: var(--parchment-light); }
+
+  /* ---------- Layout shell ---------- */
+
+  .margin-rail {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: var(--margin-w);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 32px 0;
+    border-right: 1px solid var(--rule);
+    z-index: 50;
+    background: linear-gradient(to right, var(--parchment-light), transparent);
+  }
+
+  .margin-rail__mark {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--brass);
+  }
+
+  .margin-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    align-items: center;
+  }
+
+  .margin-nav a {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-decoration: none;
+    color: var(--ink-soft);
+    text-transform: uppercase;
+    padding: 6px 4px;
+    border-left: 2px solid transparent;
+    transition: color 0.2s ease, border-color 0.2s ease;
+  }
+
+  .margin-nav a:hover,
+  .margin-nav a.is-active {
+    color: var(--teal);
+    border-left-color: var(--brass);
+  }
+
+  .margin-rail__folio {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--ink-soft);
+    letter-spacing: 0.05em;
+  }
+
+  main {
+    margin-left: var(--margin-w);
+  }
+
+  section {
+    padding: 96px clamp(24px, 6vw, 96px);
+    max-width: 880px;
+  }
+
+  .folio-label {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--brass);
+    display: block;
+    margin-bottom: 18px;
+  }
+
+  .folio-label::before { content: "fol. "; opacity: 0.7; }
+
+  h1, h2, h3 { font-family: var(--font-display); font-weight: 700; color: var(--ink); margin: 0 0 0.4em; }
+
+  /* ---------- Hero / Incipit ---------- */
+
+  #incipit {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-top: 48px;
+    padding-bottom: 48px;
+  }
+
+  .initial-cap {
+    font-family: var(--font-display);
+    font-size: clamp(5rem, 14vw, 9rem);
+    line-height: 0.8;
+    float: left;
+    margin: 0.05em 0.12em 0 0;
+    background: linear-gradient(160deg, var(--brass-bright), var(--brass) 55%, #6e5322);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 0 0 rgba(0,0,0,0));
+    animation: illuminate 1.6s ease-out both;
+  }
+
+  @keyframes illuminate {
+    0% { filter: brightness(0.4) drop-shadow(0 0 0 transparent); opacity: 0; transform: translateY(6px); }
+    60% { filter: brightness(1.3) drop-shadow(0 0 14px rgba(199, 154, 75, 0.55)); }
+    100% { filter: brightness(1) drop-shadow(0 0 0 transparent); opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-text {
+    overflow: hidden;
+  }
+
+  .hero-text h1 {
+    font-size: clamp(2.4rem, 5vw, 3.6rem);
+    letter-spacing: 0.01em;
+  }
+
+  .hero-tagline {
+    font-size: 1.05rem;
+    color: var(--ink-soft);
+    max-width: 46ch;
+    margin-top: 0.6em;
+  }
+
+  .hero-meta {
+    clear: both;
+    display: flex;
+    gap: 28px;
+    margin-top: 56px;
+    flex-wrap: wrap;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--ink-soft);
+  }
+
+  .hero-meta span { color: var(--brass); }
+
+  /* ---------- About ---------- */
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 48px;
+  }
+
+  @media (max-width: 720px) {
+    .about-grid { grid-template-columns: 1fr; }
+    .margin-rail { width: 56px; }
+    main { margin-left: 56px; }
+    .margin-rail__mark { font-size: 1.05rem; }
+    .margin-nav a { font-size: 0.6rem; }
+  }
+
+  .pull-quote {
+    border-left: 3px solid var(--brass);
+    padding-left: 20px;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 1.15rem;
+    color: var(--ink-soft);
+  }
+
+  /* ---------- Skills / Ars ---------- */
+
+  .scribal-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 18px 32px;
+  }
+
+  .scribal-list li {
+    padding-left: 1.4em;
+    position: relative;
+    font-size: 0.98rem;
+  }
+
+  .scribal-list li::before {
+    content: "¶";
+    position: absolute;
+    left: 0;
+    color: var(--brass);
+    font-family: var(--font-display);
+  }
+
+  .scribal-list li strong {
+    display: block;
+    font-weight: 500;
+    color: var(--ink);
+  }
+
+  .scribal-list li span {
+    color: var(--ink-soft);
+    font-size: 0.88rem;
+  }
+
+  /* ---------- Projects / Opus ---------- */
+
+  .folio-grid {
+    display: grid;
+    gap: 28px;
+  }
+
+  .folio-card {
+    background: var(--parchment-light);
+    border: 1px solid var(--rule);
+    padding: 28px 32px;
+    position: relative;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .folio-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 24px rgba(28, 26, 23, 0.08);
+  }
+
+  .folio-card__num {
+    position: absolute;
+    top: 20px;
+    right: 24px;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--rule);
+  }
+
+  .folio-card h3 {
+    font-size: 1.4rem;
+    margin-bottom: 0.3em;
+    padding-right: 60px;
+  }
+
+  .folio-card p {
+    color: var(--ink-soft);
+    margin: 0 0 14px;
+  }
+
+  .folio-card__tags {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 14px;
+  }
+
+  .folio-card__tags span {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--teal);
+    border: 1px solid var(--teal);
+    padding: 2px 8px;
+    border-radius: 2px;
+  }
+
+  .folio-card a.folio-link {
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    text-decoration: none;
+    border-bottom: 1px solid currentColor;
+  }
+
+  /* ---------- Colophon / Contact ---------- */
+
+  #colophon {
+    border-top: 1px solid var(--rule);
+    margin-top: 40px;
+  }
+
+  .colophon-box {
+    background: var(--parchment-light);
+    border: 1px solid var(--rule);
+    padding: 40px clamp(24px, 5vw, 56px);
+    text-align: center;
+  }
+
+  .colophon-box p {
+    max-width: 52ch;
+    margin: 0 auto 24px;
+    color: var(--ink-soft);
+  }
+
+  .colophon-links {
+    display: flex;
+    justify-content: center;
+    gap: 28px;
+    flex-wrap: wrap;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+  }
+
+  .colophon-links a {
+    text-decoration: none;
+    color: var(--ink);
+    border-bottom: 1px solid var(--brass);
+    padding-bottom: 2px;
+  }
+
+  .colophon-links a:hover { color: var(--teal); }
+
+  footer.finis {
+    text-align: center;
+    padding: 32px;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--ink-soft);
+    letter-spacing: 0.08em;
+  }
+
+  footer.finis::before {
+    content: "❧";
+    display: block;
+    font-size: 1.2rem;
+    color: var(--brass);
+    margin-bottom: 8px;
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+</head>
+<body>
+
+  <nav class="margin-rail" aria-label="Section navigation">
+    <span class="margin-rail__mark" aria-hidden="true">✒</span>
+    <div class="margin-nav">
+      <a href="#incipit" class="nav-link" data-section="incipit">I · Home</a>
+      <a href="#ars" class="nav-link" data-section="ars">II · Ars</a>
+      <a href="#opus" class="nav-link" data-section="opus">III · Opus</a>
+      <a href="#colophon" class="nav-link" data-section="colophon">IV · Colophon</a>
+    </div>
+    <span class="margin-rail__folio">MMXXVI</span>
+  </nav>
+
+  <main>
+
+    <section id="incipit">
+      <span class="folio-label">1r</span>
+      <div>
+        <span class="initial-cap" aria-hidden="true">Y</span>
+        <div class="hero-text">
+          <h1>Keysha Radhitya</h1>
+          <p class="hero-tagline">
+            A student's notebook meets a developer's workshop — I study the texts
+            and traditions that ask the old questions, and I write the code that
+            asks new ones. This is where both halves live.
+          </p>
+        </div>
+      </div>
+      <div class="hero-meta">
+        <div><span>Focus —</span> Comparative &amp; textual studies</div>
+        <div><span>Also building —</span> small tools &amp; experiments in Python and JS</div>
+        <div><span>Based in —</span> Cairo, Egypt</div>
+      </div>
+    </section>
+
+    <section id="about" class="reveal">
+      <span class="folio-label">1v</span>
+      <div class="about-grid">
+        <div>
+          <h2>About</h2>
+          <p>
+            I split my time between close reading and close debugging. My primary
+            work is in the study of texts, sources, and the methods used to
+            interpret them carefully — and alongside that, I've been teaching
+            myself to build things: small scripts, computer-vision experiments,
+            and, apparently, this website.
+          </p>
+          <p>
+            I like projects that force me to slow down and get the fundamentals
+            right, whether that's tracing a chain of transmission or tracing why
+            a library won't import.
+          </p>
+        </div>
+        <blockquote class="pull-quote">
+          "Careful reading and careful code come from the same habit — checking
+          your sources before you trust the output."
+        </blockquote>
+      </div>
+    </section>
+
+    <section id="ars" class="reveal">
+      <span class="folio-label">2r</span>
+      <h2>Ars — Skills &amp; Tools</h2>
+      <ul class="scribal-list">
+        <li><strong>Python</strong><span>scripting, OpenCV, MediaPipe</span></li>
+        <li><strong>JavaScript</strong><span>DOM, small interactive tools</span></li>
+        <li><strong>HTML &amp; CSS</strong><span>layout, typography, responsive design</span></li>
+        <li><strong>Research methods</strong><span>textual analysis, source comparison</span></li>
+        <li><strong>Arabic</strong><span>reading academic &amp; classical texts</span></li>
+        <li><strong>Git basics</strong><span>version control fundamentals</span></li>
+      </ul>
+    </section>
+
+    <section id="opus" class="reveal">
+      <span class="folio-label">2v</span>
+      <h2>Opus — Selected Work</h2>
+      <div class="folio-grid">
+
+        <article class="folio-card">
+          <span class="folio-card__num">no. 01</span>
+          <h3>Hand-Gesture Webcam Filter</h3>
+          <div class="folio-card__tags"><span>Python</span><span>OpenCV</span><span>MediaPipe</span></div>
+          <p>
+            A real-time filter that tracks hand landmarks through a webcam feed
+            and triggers visual effects based on gesture — rebuilt from scratch
+            after seeing the effect used in a short video.
+          </p>
+          <a class="folio-link" href="#">View project →</a>
+        </article>
+
+        <article class="folio-card">
+          <span class="folio-card__num">no. 02</span>
+          <h3>Project Title Here</h3>
+          <div class="folio-card__tags"><span>Tag</span><span>Tag</span></div>
+          <p>
+            A short, honest description of what this project does, why you
+            built it, and the one interesting decision or problem you solved
+            along the way.
+          </p>
+          <a class="folio-link" href="#">View project →</a>
+        </article>
+
+        <article class="folio-card">
+          <span class="folio-card__num">no. 03</span>
+          <h3>Project Title Here</h3>
+          <div class="folio-card__tags"><span>Tag</span><span>Tag</span></div>
+          <p>
+            Another slot for a project. Swap this out for your next build —
+            the folio numbering updates itself, you just fill in the page.
+          </p>
+          <a class="folio-link" href="#">View project →</a>
+        </article>
+
+      </div>
+    </section>
+
+    <section id="colophon" class="reveal">
+      <span class="folio-label">3r</span>
+      <div class="colophon-box">
+        <h2>Colophon</h2>
+        <p>
+          This page was written and set by Your Name. If you'd like to get in
+          touch — about a project, a text, or anything in between — the details
+          are below.
+        </p>
+        <div class="colophon-links">
+          <a href="mailto:you@example.com">Email</a>
+          <a href="https://github.com/yourusername" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://linkedin.com/in/yourusername" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
+      </div>
+    </section>
+
+    <footer class="finis">explicit — end of page</footer>
+
+  </main>
+
+<script>
+  // Scroll-reveal for sections
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  revealEls.forEach(el => io.observe(el));
+
+  // Active nav link tracking
+  const navLinks = document.querySelectorAll('.nav-link');
+  const sections = document.querySelectorAll('main section[id]');
+
+  const navObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      const link = document.querySelector(`.nav-link[data-section="${entry.target.id}"]`);
+      if (!link) return;
+      if (entry.isIntersecting) {
+        navLinks.forEach(l => l.classList.remove('is-active'));
+        link.classList.add('is-active');
+      }
+    });
+  }, { threshold: 0.5 });
+
+  sections.forEach(sec => navObserver.observe(sec));
+</script>
+
+</body>
+</html>
