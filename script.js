@@ -1,26 +1,220 @@
-/* ---------- Custom cursor ---------- */
-const cursorDot = document.getElementById('cursorDot');
-let mouseX = 0, mouseY = 0, dotX = 0, dotY = 0;
+/* ---------- Custom cursor: pixel cat ---------- */
+const cursorCat = document.getElementById('cursorCat');
+const catCanvas = document.getElementById('cursorCatCanvas');
 
-if (cursorDot && window.matchMedia('(pointer: fine)').matches) {
+if (cursorCat && catCanvas && window.matchMedia('(pointer: fine)').matches) {
+  const ctx = catCanvas.getContext('2d');
+  ctx.imageSmoothingEnabled = false;
+
+  let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
+  let catX = mouseX, catY = mouseY;
+  let lastMoveTime = Date.now();
+  let lastMoveForSpin = Date.now();
+  let lastAngle = null;
+  let spinAccum = 0;
+  let tempState = null;
+  let tempUntil = 0;
+
+  const IDLE_MS = 2500;           // no movement for this long -> quack
+  const SPIN_THRESHOLD = Math.PI * 4; // ~720 degrees of accumulated turning -> dizzy
+  const DIZZY_DURATION = 1200;
+  const HAPPY_DURATION = 500;
+
   window.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
+    const nx = e.clientX, ny = e.clientY;
+    const dx = nx - mouseX, dy = ny - mouseY;
+    const dist = Math.hypot(dx, dy);
+
+    if (dist > 1.5) {
+      const angle = Math.atan2(dy, dx);
+      if (lastAngle !== null) {
+        let delta = angle - lastAngle;
+        while (delta > Math.PI) delta -= Math.PI * 2;
+        while (delta < -Math.PI) delta += Math.PI * 2;
+        spinAccum += Math.abs(delta);
+      }
+      lastAngle = angle;
+    }
+
+    mouseX = nx;
+    mouseY = ny;
+    lastMoveTime = Date.now();
+    lastMoveForSpin = Date.now();
+
+    if (spinAccum > SPIN_THRESHOLD) {
+      tempState = 'dizzy';
+      tempUntil = Date.now() + DIZZY_DURATION;
+      spinAccum = 0;
+    }
   });
 
-  function animateCursor() {
-    dotX += (mouseX - dotX) * 0.2;
-    dotY += (mouseY - dotY) * 0.2;
-    cursorDot.style.left = dotX + 'px';
-    cursorDot.style.top = dotY + 'px';
-    requestAnimationFrame(animateCursor);
+  // Decay the spin accumulator if the mouse pauses mid-turn, so slow
+  // deliberate movement doesn't eventually false-trigger dizziness.
+  setInterval(() => {
+    if (Date.now() - lastMoveForSpin > 400) {
+      spinAccum *= 0.5;
+      if (spinAccum < 0.05) spinAccum = 0;
+    }
+  }, 300);
+
+  document.addEventListener('click', () => {
+    tempState = 'happy';
+    tempUntil = Date.now() + HAPPY_DURATION;
+  });
+
+  function drawArcEye(x, y, upward) {
+    ctx.beginPath();
+    if (upward) ctx.arc(x, y, 1.4, Math.PI, 0);
+    else ctx.arc(x, y, 1.4, 0, Math.PI);
+    ctx.stroke();
   }
-  animateCursor();
 
-  document.querySelectorAll('a, button').forEach(el => {
-    el.addEventListener('mouseenter', () => cursorDot.classList.add('is-active'));
-    el.addEventListener('mouseleave', () => cursorDot.classList.remove('is-active'));
-  });
+  function drawXEye(x, y) {
+    ctx.beginPath();
+    ctx.moveTo(x - 1.2, y - 1.2);
+    ctx.lineTo(x + 1.2, y + 1.2);
+    ctx.moveTo(x + 1.2, y - 1.2);
+    ctx.lineTo(x - 1.2, y + 1.2);
+    ctx.stroke();
+  }
+
+  function duckPath() {
+    ctx.moveTo(14.5, 9.3);
+    ctx.arc(8, 9.3, 6.5, 0, Math.PI * 2);
+  }
+
+  function drawSilhouette(dx, dy, color) {
+    ctx.save();
+    ctx.translate(dx, dy);
+    ctx.fillStyle = color;
+    ctx.beginPath();
+    duckPath();
+    ctx.fill();
+    ctx.restore();
+  }
+
+  function drawDuck(state) {
+    const body = '#ffd447';
+    const shadow = '#f3c05f';
+    const beak = '#ff9f1c';
+    const outline = '#1a1a1a';
+    const blush = '#f4a0ac';
+
+    ctx.clearRect(0, 0, 18, 18);
+
+    // warm shadow copy, offset down-right (the "sticker" look)
+    drawSilhouette(1, 1, shadow);
+
+    // true-position yellow fill + black outline
+    drawSilhouette(0, 0, body);
+    ctx.beginPath();
+    duckPath();
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = outline;
+    ctx.stroke();
+
+    // small feather tuft on top
+    ctx.fillStyle = body;
+    ctx.beginPath();
+    ctx.moveTo(8.5, 3);
+    ctx.quadraticCurveTo(9.5, 0.5, 11, 1);
+    ctx.quadraticCurveTo(9.5, 2, 9, 3.6);
+    ctx.closePath();
+    ctx.fill();
+    ctx.lineWidth = 0.8;
+    ctx.strokeStyle = outline;
+    ctx.stroke();
+
+    ctx.fillStyle = outline;
+    ctx.strokeStyle = outline;
+    ctx.lineWidth = 1;
+
+    if (state === 'happy') {
+      drawArcEye(5.2, 8.5, true);
+      drawArcEye(10.8, 8.5, true);
+      // open beak
+      ctx.fillStyle = beak;
+      ctx.beginPath();
+      ctx.ellipse(8, 11.4, 3.2, 1.1, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.beginPath();
+      ctx.ellipse(8, 13, 2.6, 1, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = outline;
+      ctx.lineWidth = 0.8;
+      ctx.stroke();
+      ctx.fillStyle = blush;
+      ctx.fillRect(2.4, 10.2, 1.6, 1.2);
+      ctx.fillRect(12, 10.2, 1.6, 1.2);
+    } else if (state === 'dizzy') {
+      drawXEye(5.2, 8.5);
+      drawXEye(10.8, 8.5);
+      ctx.fillStyle = beak;
+      ctx.beginPath();
+      ctx.ellipse(8, 12, 3, 1.4, 0.2, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = outline;
+      ctx.lineWidth = 0.8;
+      ctx.stroke();
+    } else if (state === 'quack') {
+      drawArcEye(5.2, 8.5, true);
+      drawArcEye(10.8, 8.5, true);
+      // wide-open quacking beak
+      ctx.fillStyle = beak;
+      ctx.beginPath();
+      ctx.ellipse(8, 11.2, 3.4, 1.2, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.beginPath();
+      ctx.ellipse(8, 13.4, 2.8, 1.4, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = outline;
+      ctx.lineWidth = 0.8;
+      ctx.stroke();
+      ctx.fillStyle = '#c96b3a';
+      ctx.beginPath();
+      ctx.ellipse(8, 12.3, 1.6, 0.8, 0, 0, Math.PI * 2);
+      ctx.fill();
+    } else {
+      // resting state: plain black dot eyes + closed flat beak
+      ctx.fillRect(4.4, 7.4, 1.6, 1.6);
+      ctx.fillRect(10, 7.4, 1.6, 1.6);
+      ctx.fillStyle = beak;
+      ctx.beginPath();
+      ctx.ellipse(8, 12, 3.2, 1.3, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = outline;
+      ctx.lineWidth = 0.8;
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(4.8, 12);
+      ctx.lineTo(11.2, 12);
+      ctx.lineWidth = 0.6;
+      ctx.stroke();
+    }
+  }
+
+  function loop() {
+    catX += (mouseX - catX) * 0.25;
+    catY += (mouseY - catY) * 0.25;
+    cursorCat.style.left = catX + 'px';
+    cursorCat.style.top = catY + 'px';
+
+    const now = Date.now();
+    let state;
+    if (now < tempUntil) {
+      state = tempState;
+    } else if (now - lastMoveTime > IDLE_MS) {
+      state = 'quack';
+    } else {
+      state = 'normal';
+    }
+
+    drawDuck(state);
+    cursorCat.classList.toggle('is-quacking', state === 'quack');
+
+    requestAnimationFrame(loop);
+  }
+  loop();
 }
 
 /* ---------- Scroll progress bar ---------- */
@@ -233,23 +427,23 @@ document.querySelectorAll('.tilt-card').forEach(card => {
   });
 });
 
-/* ---------- Copy email to clipboard ---------- */
-const copyBtn = document.getElementById('copyEmailBtn');
-const copyHint = document.getElementById('copyHint');
+/* ---------- Copy to clipboard (email, phone, etc.) ---------- */
+document.querySelectorAll('.copy-btn').forEach(btn => {
+  const hint = btn.querySelector('.copy-btn__hint');
+  const originalHint = hint ? hint.textContent : '';
 
-if (copyBtn) {
-  copyBtn.addEventListener('click', async () => {
-    const email = copyBtn.dataset.email;
+  btn.addEventListener('click', async () => {
+    const value = btn.dataset.copy;
     try {
-      await navigator.clipboard.writeText(email);
-      copyBtn.classList.add('is-copied');
-      copyHint.textContent = 'copied!';
+      await navigator.clipboard.writeText(value);
+      btn.classList.add('is-copied');
+      if (hint) hint.textContent = 'copied!';
       setTimeout(() => {
-        copyBtn.classList.remove('is-copied');
-        copyHint.textContent = 'click to copy';
+        btn.classList.remove('is-copied');
+        if (hint) hint.textContent = originalHint;
       }, 1800);
     } catch (err) {
-      copyHint.textContent = 'copy failed — select manually';
+      if (hint) hint.textContent = 'copy failed — select manually';
     }
   });
-}
+});
