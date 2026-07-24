@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Keysha Radhitya — About Me</title>
+<meta name="description" content="Keysha Radhitya — student at Al-Azhar University, curious about code, design, and everything in between.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+ <div class="cursor-cat" id="cursorCat">
+    <canvas id="cursorCatCanvas" width="16" height="16"></canvas>
+    <span class="cursor-cat__bubble">quack~</span>
+  </div>
+  <div class="progress-bar" id="progressBar"></div>
+
+  <nav class="dock" aria-label="Section navigation">
+    <span class="dock-mark" aria-hidden="true">◆</span>
+    <a href="#hero" class="dock-link nav-link" data-section="hero">Home</a>
+    <a href="#about" class="dock-link nav-link" data-section="about">About</a>
+    <a href="#skills" class="dock-link nav-link" data-section="skills">Interests</a>
+    <a href="#projects" class="dock-link nav-link" data-section="projects">Gallery</a>
+    <a href="#contact" class="dock-link nav-link" data-section="contact">Contact</a>
+  </nav>
+
+  <main>
+
+    <section id="hero">
+      <canvas id="particles" aria-hidden="true"></canvas>
+      <div class="grid-overlay" aria-hidden="true"></div>
+      <div class="hero-inner">
+        <div class="avatar avatar--hero">
+          <img src="profile.jpeg" alt="Keysha Radhitya" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+          <span class="avatar-fallback">KR</span>
+        </div>
+        <p class="hud-label">STUDENT// <span id="clock">00:00:00</span></p>
+        <h1 class="glitch-name" data-text="Keysha Radhitya">Keysha Radhitya</h1>
+        <p class="typed-role">Still learning to <span id="typed"></span><span class="cursor-blink">|</span></p>
+        <div class="hero-actions">
+          <a class="btn-primary" href="#projects">Diliat-liat dulu Qhaa Qhaa~</a>
+          <a class="btn-ghost" href="#contact">Sapa si doi</a>
+        </div>
+      </div>
+      <div class="scroll-cue" aria-hidden="true"><span></span>Scroll</div>
+    </section>
+
+    <section id="about" class="reveal">
+      <span class="section-tag">// 01 — About</span>
+      <div class="about-grid">
+        <div class="about-text">
+          <h2>Hi, Gue  Keysha Radhitya.</h2>
+          <p>
+            Gue lahir di Lampung, di sumatra sono noh....
+            Terus tinggal di Karawang, Jawa Barat. Ampe 14 tahun noh disono,
+            ya kesehariannya idup,makan,tidur,buang hajat, Repeat.
+          </p>
+          <p>
+            Just ingfo gue sekarang tinggal di Cairo, Egypt.
+            "ngapain tuh bang?"
+            Kuliah lah kocak, kalo jadi TKW mana mau gue.....
+          </p>
+           <div class="polaroid-strip">
+            <figure class="polaroid polaroid--1">
+              <div class="polaroid__photo">
+                <img src="photo-1.jpg" alt="Photo of me 1" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <span class="polaroid__placeholder">photo-1.jpg</span>
+              </div>
+              <figcaption>cita-cita mata minus</figcaption>
+            </figure>
+            <figure class="polaroid polaroid--2">
+              <div class="polaroid__photo">
+                <img src="photo-2.jpg" alt="Photo of me 2" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <span class="polaroid__placeholder">photo-2.jpg</span>
+              </div>
+              <figcaption>Anak pinter katanya</figcaption>
+            </figure>
+            <figure class="polaroid polaroid--3">
+              <div class="polaroid__photo">
+                <img src="photo-3.jpg" alt="Photo of me 3" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <span class="polaroid__placeholder">photo-3.jpg</span>
+              </div>
+              <figcaption>udah gede malah gila</figcaption>
+            </figure>
+            <figure class="polaroid polaroid--4">
+              <div class="polaroid__photo">
+                <img src="photo-4.webp" alt="Photo of me 4" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <span class="polaroid__placeholder">photo-4.jpg</span>
+              </div>
+              <figcaption>pas lulus SMA</figcaption>
+            </figure>
+            <figure class="polaroid polaroid--5">
+              <div class="polaroid__photo">
+                <img src="photo-5.webp" alt="Photo of me 5" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <span class="polaroid__placeholder">photo-5.jpg</span>
+              </div>
+              <figcaption>tau tau kuliah</figcaption>
+            </figure>
+          </div>
+        </div>
+        <div class="profile-card">
+          <div class="avatar avatar--card">
+            <img src="profile.jpg" alt="Keysha Radhitya" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <span class="avatar-fallback">KR</span>
+          </div>
+          <span class="profile-card__label">// identity file</span>
+          <div class="profile-row"><span class="profile-key">Origin</span><span class="profile-val">Lampung, Indonesia</span></div>
+          <div class="profile-row"><span class="profile-key">Raised in</span><span class="profile-val">Karawang, West Java</span></div>
+          <div class="profile-row"><span class="profile-key">Studying at</span><span class="profile-val">Al-Azhar University, Cairo</span></div>
+          <div class="profile-row"><span class="profile-key">Type</span><span class="profile-val">INFP — Scorpio</span></div>
+          <div class="profile-row"><span class="profile-key">Go-to food</span><span class="profile-val">Bakso &amp; anything with fish</span></div>
+          <div class="profile-card__chips">
+            <span>Cooking</span><span>Basketball</span><span>Swimming</span><span>Traveling</span><span>Journaling</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills" class="reveal">
+      <span class="section-tag">// 02 — A Bit More About Me</span>
+      <h2>Ga jago, tapi iseng-iseng~</h2>
+      <p class="section-sub">Semua gue belajar-belajarin biar ganteng aselole :3</p>
+      <div class="rings-grid">
+
+        <div class="ring-item">
+          <svg class="ring-svg" viewBox="0 0 120 120">
+            <circle class="ring-track" cx="60" cy="60" r="52"></circle>
+            <circle class="ring-fill" cx="60" cy="60" r="52" data-pct="75"></circle>
+          </svg>
+          <span class="ring-pct">75%</span>
+          <span class="ring-label">Graphic Design</span>
+        </div>
+
+        <div class="ring-item">
+          <svg class="ring-svg" viewBox="0 0 120 120">
+            <circle class="ring-track" cx="60" cy="60" r="52"></circle>
+            <circle class="ring-fill" cx="60" cy="60" r="52" data-pct="70"></circle>
+          </svg>
+          <span class="ring-pct">70%</span>
+          <span class="ring-label">Photo &amp; Video Editing</span>
+        </div>
+
+        <div class="ring-item">
+          <svg class="ring-svg" viewBox="0 0 120 120">
+            <circle class="ring-track" cx="60" cy="60" r="52"></circle>
+            <circle class="ring-fill" cx="60" cy="60" r="52" data-pct="40"></circle>
+          </svg>
+          <span class="ring-pct">40%</span>
+          <span class="ring-label">Cooking</span>
+        </div>
+
+        <div class="ring-item">
+          <svg class="ring-svg" viewBox="0 0 120 120">
+            <circle class="ring-track" cx="60" cy="60" r="52"></circle>
+            <circle class="ring-fill" cx="60" cy="60" r="52" data-pct="50"></circle>
+          </svg>
+          <span class="ring-pct">50%</span>
+          <span class="ring-label">Gaming</span>
+        </div>
+
+        <div class="ring-item">
+          <svg class="ring-svg" viewBox="0 0 120 120">
+            <circle class="ring-track" cx="60" cy="60" r="52"></circle>
+            <circle class="ring-fill" cx="60" cy="60" r="52" data-pct="80"></circle>
+          </svg>
+          <span class="ring-pct">80%</span>
+          <span class="ring-label">Research Methods</span>
+        </div>
+
+        <div class="ring-item">
+          <svg class="ring-svg" viewBox="0 0 120 120">
+            <circle class="ring-track" cx="60" cy="60" r="52"></circle>
+            <circle class="ring-fill" cx="60" cy="60" r="52" data-pct="75"></circle>
+          </svg>
+          <span class="ring-pct">75%</span>
+          <span class="ring-label">Arabic (Academic)</span>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="projects" class="reveal">
+      <span class="section-tag">// 03 — Design Gallery</span>
+      <h2>Hal-hal yang udah gue buat  &amp; edit</h2>
+      <p class="section-sub">Foto-foto dan hasil editan gueh yang sangat amat UWAW!</p>
+      <div class="tilt-grid">
+
+         <article class="tilt-card">
+          <div class="tilt-card__inner">
+            <div class="gallery-card__image">
+              <img src="design-1.jpg" alt="Design or edited photo 1" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+              <span class="gallery-card__placeholder"><br>design-1.jpg</span>
+            </div>
+            <span class="tilt-card__index">01</span>
+            <h3>Street Photography</h3>
+            <p>Gue dijalan gabut, ada orang nih... yaudah gue fotoin</p>
+            <div class="tilt-card__tags"><span>Lightroom</span></div>
+            <a href="projects.html" class="tilt-card__link">View →</a>
+          </div>
+        </article>
+ 
+        <article class="tilt-card">
+          <div class="tilt-card__inner">
+            <div class="gallery-card__image">
+              <img src="design-2.jpg" alt="Design or edited photo 2" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+              <span class="gallery-card__placeholder">Add photo:<br>design-2.jpg</span>
+            </div>
+            <span class="tilt-card__index">02</span>
+            <h3>abstract Photography</h3>
+            <p>Semua yang uniq-uniq gue fotoin dah</p>
+            <div class="tilt-card__tags"><span>Lightroom</span></div>
+            <a href="projects.html" class="tilt-card__link">View →</a>
+          </div>
+        </article>
+ 
+        <article class="tilt-card">
+          <div class="tilt-card__inner">
+            <div class="gallery-card__image">
+              <img src="design-3.jpg" alt="Design or edited photo 3" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+              <span class="gallery-card__placeholder">Add photo:<br>design-3.jpg</span>
+            </div>
+            <span class="tilt-card__index">03</span>
+            <h3>People Photography</h3>
+            <p>Orang nya MasyaAllah + gokil? gue fotoin </p>
+            <div class="tilt-card__tags"><span>Lightroom</span></div>
+            <a href="projects.html" class="tilt-card__link">View →</a>
+          </div>
+        </article>
+
+         </div>
+      <div class="see-all-row">
+        <a href="projects.html" class="see-all-link">See all projects →</a>
+      </div>
+    </section>
+
+      </div>
+    </section>
+
+    <section id="contact" class="reveal">
+      <span class="section-tag">// 04 — Contact</span>
+      <div class="hud-panel">
+        <h2>Ajak Ngobrol!</h2>
+        <p>Mau tau jauh tentang beliau ini? klik tombol-tombol dibawah cuy!</p>
+        <div class="hud-panel__row hud-panel__row--stack">
+          <button class="copy-btn" data-copy="you@example.com">
+            <span class="copy-btn__value">keyyrdh207@gmail.com</span>
+            <span class="copy-btn__hint">click to copy</span>
+          </button>
+          <button class="copy-btn" data-copy="+62 812-3456-7890">
+            <span class="copy-btn__value">+62 857-1489-8156</span>
+            <span class="copy-btn__hint">click to copy</span>
+          </button>
+        </div>
+        <div class="social-row">
+          <a href="https://www.instagram.com/keyyrdh/" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://www.tiktok.com/@keyyrdh" target="_blank" rel="noopener">TikTok</a>
+          <a href="https://github.com/Keyyrdh" target="_blank" rel="noopener">GitHub</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="finis">If you always cihuy, you'll be cihuy until you die.</footer>
+
+<script src="script.js" defer></script>
+</body>
+</html>
